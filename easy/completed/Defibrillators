@@ -1,0 +1,79 @@
+import java.util.*;
+import java.io.*;
+import java.math.*;
+
+/**
+ * Auto-generated code below aims at helping you parse
+ * the standard input according to the problem statement.
+ **/
+
+class Solution {
+
+    public static void main(String args[]) {
+        Scanner in = new Scanner(System.in);
+        String LON = in.next();
+        String LAT = in.next();
+        int N = in.nextInt(),bestIndex=0;
+        String[] names=new String[N];
+        double[] distance=new double[N];
+        double bestPos=99999999.9;
+        if (in.hasNextLine()) {
+            in.nextLine();
+        }
+        for (int i = 0; i < N; i++) {
+            names[i]="";
+            String DEFIB = in.nextLine();
+            String LotBstr="",LatBstr="",LotAstr="",LatAstr="";
+            double LonB=0,LatB=0,LonA=0,LatA=0;
+            for(int j=0;j<DEFIB.length();j++){
+                if(DEFIB.charAt(j)==';'){
+                    j++;
+                    while(DEFIB.charAt(j)!=';'){
+                        names[i]+=DEFIB.charAt(j);
+                        j++;
+                    }
+                    break;
+                }
+            }
+            int firstIndex = DEFIB.lastIndexOf(';');
+            firstIndex=DEFIB.lastIndexOf(';',firstIndex-1);
+            int j=firstIndex+1;
+            while(DEFIB.charAt(j)!=';'){
+                if(DEFIB.charAt(j)==',')LotBstr+='.';
+                else LotBstr+=DEFIB.charAt(j);
+                j++;
+            }
+            int lastIndex = DEFIB.lastIndexOf(';');
+            for(j=lastIndex+1;j<DEFIB.length();j++){
+                if(DEFIB.charAt(j)==',')LatBstr+='.';
+                else LatBstr+=DEFIB.charAt(j);
+            }
+            for(j=0;j<LON.length();j++){
+                if(LON.charAt(j)==',')  
+                    LotAstr+='.';
+                else 
+                    LotAstr+=LON.charAt(j);
+            }
+            for(j=0;j<LAT.length();j++){
+                if(LAT.charAt(j)==',')  
+                    LatAstr+='.';
+                else 
+                    LatAstr+=LAT.charAt(j);
+            }
+            LonB = Math.toRadians(Double.parseDouble(LotBstr));
+            LonA = Math.toRadians(Double.parseDouble(LotAstr));
+            LatB = Math.toRadians(Double.parseDouble(LatBstr));
+            LatA = Math.toRadians(Double.parseDouble(LatAstr));
+            distance[i]=Math.sqrt(Math.pow((LonB-LonA)*Math.cos((LatB+LatA)/2),2)+Math.pow(LatB-LatA,2))*6371;
+            if(LonB==LonA&&LatB==LatA){
+                bestIndex=i;
+                break;
+            }
+            if(distance[i]<bestPos){
+                bestPos=distance[i];
+                bestIndex=i;
+            }
+        }
+        System.out.println(names[bestIndex]);
+    }
+}
