@@ -1,0 +1,62 @@
+import java.util.*;
+import java.io.*;
+import java.math.*;
+
+/**
+ * Auto-generated code below aims at helping you parse
+ * the standard input according to the problem statement.
+ **/
+class Solution {
+
+    public static void main(String args[]) {
+        Scanner in = new Scanner(System.in);
+        int N = in.nextInt();
+        String[] invalid=new String [N];//9780133661750 (sum%11==10||
+        int numberOfInvalidStrings=0;
+        if (in.hasNextLine()) {
+            in.nextLine();
+        }
+        for (int i = 0; i < N; i++) {
+            String ISBN = in.nextLine();
+            int sum=0;System.err.println(ISBN);
+            if(ISBN.length()==10||ISBN.length()==13){
+            if(ISBN.length()==10){
+                for(int j = 0;j<9;j++){
+                    sum+=Character.digit(ISBN.charAt(j), 10)*(10-j);
+                }
+                if(ISBN.charAt(9)=='X'){
+                    if(sum%11!=1){
+                        numberOfInvalidStrings++;
+                        invalid[i]=ISBN;
+                    }
+                }
+                else if(sum%11+Character.digit(ISBN.charAt(9), 10)!=11&&Character.digit(ISBN.charAt(9), 10)!=0){
+                    numberOfInvalidStrings++;
+                    invalid[i]=ISBN;
+                }
+            }
+            else if (ISBN.length()==13){
+                for(int j = 0;j<12;j++){
+                    if(j%2==0)
+                        sum+=Character.digit(ISBN.charAt(j), 10);
+                    else 
+                        sum+=Character.digit(ISBN.charAt(j), 10)*3;
+                }
+                if(sum%10+Character.digit(ISBN.charAt(12), 10)!=10&&Character.digit(ISBN.charAt(12), 10)!=0 ){
+                    numberOfInvalidStrings++;
+                    invalid[i]=ISBN;
+                }
+            }
+            }
+            else{
+                numberOfInvalidStrings++;
+                invalid[i]=ISBN;
+            }
+        }
+        System.out.println(numberOfInvalidStrings+" invalid:");
+        for (int i = 0; i < N; i++) {
+            if(invalid[i]!=null)
+            System.out.println(invalid[i]);
+        }
+    }
+}
