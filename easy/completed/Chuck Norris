@@ -1,0 +1,39 @@
+import java.util.*;
+import java.io.*;
+import java.math.*;
+
+/**
+ * Auto-generated code below aims at helping you parse
+ * the standard input according to the problem statement.
+ **/
+class Solution {
+
+    public static void main(String args[]) {
+        Scanner in = new Scanner(System.in);
+        String MESSAGE = in.nextLine(); 
+        String num="";
+        String convert="";
+        String buf="";
+        for(int i = 0 ; i < MESSAGE.length(); i++){
+            int myChar = MESSAGE.charAt(i);//myChar number of char
+            buf = Integer.toBinaryString(myChar);//binary string convert
+            while(buf.length()%7 != 0){
+                buf = "0" + buf;
+            }
+            System.err.println(buf);
+            convert+=buf;
+        }
+        if(convert.charAt(0) == '0')num+="00 0";
+        else if(convert.charAt(0) == '1')num+="0 0";
+        for(int i = 1 ; i < convert.length(); i++){
+            if(convert.charAt(i) == '0' && convert.charAt(i - 1) == '0')num+="0";
+            else if(convert.charAt(i) == '1' && convert.charAt(i - 1) == '1')num+="0";
+            else if(convert.charAt(i) == '1' && convert.charAt(i - 1) == '0')num+=" 0 0";
+            else if(convert.charAt(i) == '0' && convert.charAt(i - 1) == '1')num+=" 00 0";
+        }
+        // Write an action using System.out.println()
+        // To debug: System.err.println("Debug messages...");
+
+        System.out.println(num);
+    }
+}
