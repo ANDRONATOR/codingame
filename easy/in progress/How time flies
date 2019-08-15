@@ -1,0 +1,69 @@
+import java.util.*;
+import java.io.*;
+import java.math.*;
+
+class Solution {
+
+    public static void main(String args[]) {
+        Scanner in = new Scanner(System.in);
+        String BEGIN = in.next();
+        String END = in.next();
+        String[] arrOfStart = BEGIN.split("[.]");
+        String[] arrOfEnd = END.split("[.]");
+        int year=0,months=0,days=0,yE=Integer.parseInt(arrOfEnd[2]),yS=Integer.parseInt(arrOfStart[2]),mS=Integer.parseInt(arrOfStart[1]);
+        int mE=Integer.parseInt(arrOfEnd[1]),dS=Integer.parseInt(arrOfStart[0]),dE=Integer.parseInt(arrOfEnd[0]);
+        if(dS!=dE){
+            if(dS<dE){
+                days+=dE-dS;
+            }
+            else{
+                if(mS==2){
+                    if(yS%4==0) days+=29-dS+dE;
+                    else days+=28-dS+dE;
+                }
+                if(mS==1||mS==3||mS==5||mS==7||mS==8||mS==10||mS==12){
+                    days+=31-dS+dE;
+                }
+                else if(mS==4||mS==6||mS==9||mS==11)days+=30-dS+dE;
+                mS++;
+                if(mS%13==0){
+                    mS=1;
+                    yS++;
+                }
+            }
+        }
+        while(mS!=mE){
+            if(mS==2){
+                if(yS%4==0) days+=29;
+                else days+=28;
+            }
+            if(mS==1||mS==3||mS==5||mS==7||mS==8||mS==10||mS==12){
+                days+=31;
+            }
+            else if(mS==4||mS==6||mS==9||mS==11)days+=30;
+            mS++;
+            months++;
+            if(mS%13==0){
+                mS=1;
+                yS++;
+            }
+        }//System.err.println(days);
+        while(yS!=yE){
+            if(yS%4!=0)days+=365;
+            else days+=366;
+            yS++;
+            year++;
+            //System.err.println(yS);System.err.println(year);System.err.println(days);
+            if(yS%4==0&&yS==yE&&mS>2)days++;
+        }
+        if(year>1)System.out.print(year+" years,");
+        else if(year==1)System.out.print(year+" year,");
+        if(year>0&& months>0)System.out.print(" ");
+        if(months>1)System.out.print(months+" months,");
+        else if(months==1)System.out.print(months+" month,");
+        if(year>0|| months>0)System.out.print(" ");
+        if(days>1)System.out.print("total "+days+" days");
+        else if(days==1)System.out.print("total "+days+" day");
+        else System.out.print("total 0 days");
+    }
+}
