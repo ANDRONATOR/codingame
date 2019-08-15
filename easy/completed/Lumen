@@ -1,0 +1,72 @@
+import java.util.*;
+import java.io.*;
+import java.math.*;
+
+/**
+ * Auto-generated code below aims at helping you parse
+ * the standard input according to the problem statement.
+ **/
+class Solution {
+
+    public static void main(String args[]) {
+        Scanner in = new Scanner(System.in);
+        int N = in.nextInt();
+        int L = in.nextInt();
+        int result =0;
+        int[][] array=new int [N][N];
+        if (in.hasNextLine()) {
+            in.nextLine();
+        }
+        for (int i = 0; i < N; i++) {
+            String LINE = in.nextLine();
+            for(int j = 0; j < N; j++){
+                if(LINE.charAt(2*j) == 88)
+                array[i][j] = 0;
+                else if(LINE.charAt(2*j) == 67){
+                    array[i][j] = L;
+                }
+                System.err.print(array[i][j]);
+            }
+            System.err.println();
+        }System.err.println();
+        for(int k = 0; k < L; k++) {
+        for(int i = 0; i < N; i++) {
+            for(int j = 0; j < N; j++){
+                if(array[i][j] > 1){
+                    int local_light=array[i][j]-1;
+                    if(j+1<N&&array[i][j+1]<=local_light){
+                        array[i][j+1]=local_light;
+                    }
+                    if(i+1<N&&array[i+1][j]<local_light){
+                        array[i+1][j]=local_light;
+                    }
+                    if(j+1<N&&i+1<N&&array[i+1][j+1]<local_light){
+                        array[i+1][j+1]=local_light;
+                    }
+                    if(j-1>=0&&array[i][j-1]<local_light){
+                        array[i][j-1]=local_light;
+                    }
+                    if(i-1>=0&&array[i-1][j]<local_light){
+                        array[i-1][j]=local_light;
+                    }
+                    if(i-1>=0&&j-1>=0&&array[i-1][j-1]<local_light){
+                        array[i-1][j-1]=local_light;
+                    }
+                    if(j+1<N&&i-1>=0&&array[i-1][j+1]<local_light){
+                        array[i-1][j+1]=local_light;
+                    }
+                    if(i+1<N&&j-1>=0&&array[i+1][j-1]<local_light){
+                        array[i+1][j-1]=local_light;
+                    }
+                }
+            }
+        }
+        }
+        for(int i = 0; i < N; i++) {
+            for(int j = 0; j < N; j++){
+                System.err.print(array[i][j]);
+                if(array[i][j]==0)result++;
+            }System.err.println();
+        }System.out.println(result);
+    }
+}
